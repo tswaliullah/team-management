@@ -16,11 +16,6 @@ router.get(
 )
 
 
-router.post(
-    "/",
-    UserController.createUser
-)
-
 router.put(
     "/:id",   
     UserController.UpdateUserFRomDB

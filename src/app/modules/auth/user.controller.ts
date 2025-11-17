@@ -2,7 +2,30 @@ import { Request, Response } from "express";
 import { AuthService } from "./user.service";
 import sendResponse from "../../shared/sendResponse";
 import catchAsync from "../../shared/catchAsync";
-import status from "http-status";
+import httpStatus  from 'http-status';
+
+
+
+
+
+
+const register = catchAsync(async (req: Request, res: Response) => {
+    const result = await AuthService.register(req.body);
+
+    sendResponse(res, {
+        statusCode: httpStatus.CREATED,
+        success: true,
+        message: "User created successfully..!",
+        data: result
+    })
+
+})
+
+
+
+
+
+
 
 const login = catchAsync(async (req: Request, res: Response) => {
     const result = await AuthService.login(req.body)
@@ -24,7 +47,7 @@ const login = catchAsync(async (req: Request, res: Response) => {
     })
 
     sendResponse(res, {
-        statusCode: status.OK,
+        statusCode: httpStatus.OK,
         success: true,
         message: "User login successfully..!",
         data: {
@@ -45,7 +68,7 @@ const getMe = catchAsync(async (req: Request, res: Response) => {
 
 
     sendResponse(res, {
-        statusCode: status.OK,
+        statusCode: httpStatus.OK,
         success: true,
         message: "User retrive successfully..!",
         data: result
@@ -56,6 +79,7 @@ const getMe = catchAsync(async (req: Request, res: Response) => {
 
 
 export const AuthController = {
+    register,
     login,
     getMe
 }

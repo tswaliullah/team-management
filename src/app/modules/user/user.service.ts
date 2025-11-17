@@ -1,25 +1,6 @@
-import { Request } from "express";
 import { prisma } from "../../shared/prisma";
-import bcrypt from "bcryptjs";
-
 import { createUserInput } from "./user.interface";
-import {Prisma } from "../../../generated/client";
 
-const createUser = async (payload: createUserInput) => {
-
-    console.log(payload);
-
-    const hashedPass = await bcrypt.hash(payload.password, 10)
-
-   const result = await prisma.user.create({
-            data: {
-                name: payload.name,
-                email: payload.email,
-                password: hashedPass
-            }
-        });
-    return result
-}
 
 
 const GetAllUsersFRomDB = async (payload: any) => {
@@ -81,7 +62,6 @@ const DeleteUserFRomDB = async (id: string) => {
 
 
 export const UserService = {
-    createUser,
     GetAllUsersFRomDB,
     GetSingleUsersFRomDB,
     UpdateUserFRomDB,
