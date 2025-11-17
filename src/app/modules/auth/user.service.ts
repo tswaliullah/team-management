@@ -85,15 +85,17 @@ const getMe = async(session: any) => {
     const userData = await prisma.user.findUniqueOrThrow({
         where: {
             email: decodedData.email,
+        },
+        select: {
+            id: true,
+            email: true,
+            name: true,
+            createdAt: true,
+            updatedAt: true,
         }
     })
 
-    const {id, email} = userData;
-
-    return {
-        id,
-        email
-    }
+    return userData
 }
 
 export const AuthService = {
