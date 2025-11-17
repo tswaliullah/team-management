@@ -1,0 +1,10 @@
+model ActivityLog {
+  id          String   @id @default(cuid())
+  action      String
+  taskTitle   String
+  fromMember  String?
+  toMember    String?
+  timestamp   DateTime @default(now())
+
+  @@index([timestamp])
+}

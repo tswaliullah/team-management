@@ -1,0 +1,26 @@
+model Team {
+  id        String   @id @default(cuid())
+  name      String
+  createdBy String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  creator   User        @relation(fields: [createdBy], references: [id], onDelete: Cascade)
+  members   TeamMember[]
+  projects  Project[]
+}
+
+model TeamMember {
+  id        String   @id @default(cuid())
+  name      String
+  role      String
+  capacity  Int      @default(5)
+  teamId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  team      Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  tasks     Task[]   @relation("MemberTasks")
+
+  @@index([teamId])
+}

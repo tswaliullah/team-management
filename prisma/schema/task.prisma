@@ -1,0 +1,20 @@
+model Task {
+  id            String       @id @default(cuid())
+  title         String
+  description   String?
+  priority      Priority     @default(MEDIUM)
+  status        Status       @default(PENDING)
+  projectId     String
+  assignedTo    String?
+  assignedMemberId String?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  project       Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  assignedUser  User?        @relation("AssignedTasks", fields: [assignedTo], references: [id], onDelete: SetNull)
+  assignedMember TeamMember? @relation("MemberTasks", fields: [assignedMemberId], references: [id], onDelete: SetNull)
+
+  @@index([projectId])
+  @@index([assignedTo])
+  @@index([assignedMemberId])
+}
